@@ -4,9 +4,9 @@
 
 #include <algorithm>
 #include <cmath>
+#include <fstream>
 #include <iostream>
 #include <limits>
-#include <fstream>
 #include <sstream>
 
 namespace kdt
@@ -14,7 +14,7 @@ namespace kdt
 #pragma region Private
 
     /// Allocate new node
-    Node* Tree::CreateNewNode(const float4& targetPoint)
+    Node* Tree::CreateNewNode(const Vertex& targetPoint)
     {
         try
         {
@@ -34,7 +34,7 @@ namespace kdt
     }
 
     /// Initialize tree with multiple nodes
-    void Tree::InitTreeWithMultiplePoints(std::vector<float4> points)
+    void Tree::InitTreeWithMultiplePoints(std::vector<Vertex> points)
     {
         // Get index of median point
         auto firstNodeIndex{ GetIndexOfMedianNode(points) };
@@ -54,7 +54,7 @@ namespace kdt
     }
 
     /// Sort points by X-value and return median node index
-    unsigned int Tree::GetIndexOfMedianNode(std::vector<float4>& points)
+    unsigned int Tree::GetIndexOfMedianNode(std::vector<Vertex>& points)
     {
         Tree::SortPointsByXValue(points);
 
@@ -62,7 +62,7 @@ namespace kdt
     }
 
     /// Read points from file
-    void Tree::ReadFromFile(std::string& fileName) 
+    void Tree::ReadFromFile(std::string& fileName)
     {
         // Open file
         std::ifstream file(fileName);
@@ -72,13 +72,13 @@ namespace kdt
         float y{ 0.0f };
         float z{ 0.0f };
 
-        std::vector<float4> points;
+        std::vector<Vertex> points;
 
         // Read points' data from file
         while (!file.eof())
         {
             file >> x >> y >> z;
-            points.push_back(float4{ x, y, z });
+            points.push_back(Vertex{ x, y, z });
         }
 
         // Close file
@@ -109,7 +109,7 @@ namespace kdt
     }
     
     /// Delete node (if it exists) inside subtree with target data
-    int Tree::Delete(float4& targetPoint, Node* current,
+    int Tree::Delete(Vertex& targetPoint, Node* current,
                          unsigned int currentDimension)
     {
         // Get next dimension
@@ -155,7 +155,7 @@ namespace kdt
         }
         
         // Continue the search
-        if (targetPoint.v[currentDimension] < current->point[currentDimension])
+        if (targetPoint[currentDimension] < current->point[currentDimension])
         {
             // Search left subtree
             return Delete(targetPoint, current->left, nextDimension);
@@ -169,7 +169,7 @@ namespace kdt
 
     /// Find point in subtree that contains point with minimum value
     /// in given target dimension
-    float4 Tree::FindMin(Node* current, unsigned int targetDimension,
+    Vertex Tree::FindMin(Node* current, unsigned int targetDimension,
                          unsigned int currentDimension)
     {
         if (!current)
@@ -181,7 +181,7 @@ namespace kdt
             // so we are returning a float point with
             // coordinates x = y = z = max_float_value
             float returnBuffer{ std::numeric_limits<float>::max() };
-            return float4(returnBuffer, returnBuffer, returnBuffer, 1.0f);
+            return Vertex(returnBuffer, returnBuffer, returnBuffer, 1.0f);
         }
 
         if (currentDimension == targetDimension)
@@ -204,8 +204,8 @@ namespace kdt
         // right subtree minimum
         IncrementDimension(currentDimension);
 
-        float4 left{ FindMin(current->left, targetDimension, currentDimension) };
-        float4 right{ FindMin(current->right, targetDimension, currentDimension) };
+        Vertex left{ FindMin(current->left, targetDimension, currentDimension) };
+        Vertex right{ FindMin(current->right, targetDimension, currentDimension) };
 
         if (left[targetDimension] <= right[targetDimension] &&
             left[targetDimension] <= current->point[targetDimension])
@@ -220,7 +220,7 @@ namespace kdt
 
     /// Find point in subtree that contains point with maximum value
     /// in given target dimension
-    float4 Tree::FindMax(Node* current, unsigned int targetDimension,
+    Vertex Tree::FindMax(Node* current, unsigned int targetDimension,
                          unsigned int currentDimension)
     {
         if (!current)
@@ -232,7 +232,7 @@ namespace kdt
             // so we are returning a float point with
             // coordinates x = y = z = min_float_value
             float returnBuffer{ std::numeric_limits<float>::min() };
-            return float4(returnBuffer, returnBuffer, returnBuffer, 1.0f);
+            return Vertex(returnBuffer, returnBuffer, returnBuffer, 1.0f);
         }
 
         if (currentDimension == targetDimension)
@@ -255,8 +255,8 @@ namespace kdt
         // right subtree maximum
         IncrementDimension(currentDimension);
 
-        float4 left{ FindMin(current->left, targetDimension, currentDimension) };
-        float4 right{ FindMin(current->right, targetDimension, currentDimension) };
+        Vertex left{ FindMin(current->left, targetDimension, currentDimension) };
+        Vertex right{ FindMin(current->right, targetDimension, currentDimension) };
 
         if (left[targetDimension] >= right[targetDimension] &&
             left[targetDimension] >= current->point[targetDimension])
@@ -272,8 +272,8 @@ namespace kdt
     /// Search the tree for the nearest neighbour
     /// (the node containing the closest point of
     /// the target point)
-    void Tree::NearestNeighbourSearch(const float4& targetPoint, Node* current,
-        unsigned int dimension, float4& nearestPoint, float& nearestDistance)
+    void Tree::NearestNeighbourSearch(Vertex& targetPoint, Node* current,
+        unsigned int dimension, Vertex& nearestPoint, float& nearestDistance)
     {
         // Get distance between target and current
         float distance{ Distance(targetPoint, current->point) };
@@ -291,7 +291,7 @@ namespace kdt
             return;
         }
 
-        const float targetDimensionValue{ targetPoint.v[dimension] };
+        const float targetDimensionValue{ targetPoint[dimension] };
 
         if (targetDimensionValue <= current->point[dimension])
         {
@@ -322,7 +322,6 @@ namespace kdt
                 NearestNeighbourSearch(targetPoint, current->right,
                     dimension, nearestPoint, nearestDistance);
             }
-
         }
         else
         {
@@ -385,7 +384,7 @@ namespace kdt
     /// Overloaded constructor 1
     /// Takes 1 point
     /// Initializes tree with 1 point
-    Tree::Tree(const float4& point)
+    Tree::Tree(const Vertex& point)
         : root{ CreateNewNode(point) }
     {
     }
@@ -393,11 +392,9 @@ namespace kdt
     /// Overloaded constructor 2
     /// Takes a vector of points
     /// Initializes tree with multiple points
-    Tree::Tree(const std::vector<float4>& points)
+    Tree::Tree(std::vector<Vertex> points)
     {
-        std::vector<float4> pointsCopy{ points };
-
-        InitTreeWithMultiplePoints(pointsCopy);
+        InitTreeWithMultiplePoints(points);
     }
 
     /// Overloaded constructor 3
@@ -417,7 +414,7 @@ namespace kdt
     }
 
     /// Insert node to tree
-    int Tree::Insert(float4& targetPoint)
+    int Tree::Insert(Vertex& targetPoint)
     {
         // If tree is empty
         if (!root.next)
@@ -446,7 +443,7 @@ namespace kdt
                 return RETURN_INSERT_DUPLICATE_POINT;
             }
 
-            if (targetPoint.v[dimension] < current->point.v[dimension])
+            if (targetPoint[dimension] < current->point[dimension])
             {
                 // Go left
                 previous = current;
@@ -468,7 +465,7 @@ namespace kdt
         if (!target)
             return RETURN_BAD_ALLOCATION;
 
-        if (targetPoint.v[dimension] < previous->point.v[dimension])
+        if (targetPoint[dimension] < previous->point[dimension])
         {
             // Insert left
             previous->left = target;
@@ -483,7 +480,7 @@ namespace kdt
     }
 
     /// Insert multiple nodes to tree
-    int Tree::Insert(std::vector<float4>& points)
+    int Tree::Insert(std::vector<Vertex>& points)
     {
         int returnValue{ 0 };
 
@@ -499,7 +496,7 @@ namespace kdt
 
     /// Find (and if found) delete the node
     /// with target coordinates
-    int Tree::Delete(float4& targetPoint)
+    int Tree::Delete(Vertex& targetPoint)
     {
         int returnValue{ Delete(targetPoint, root.next, 0) };
         return returnValue;
@@ -508,12 +505,12 @@ namespace kdt
     /// Search the tree for the nearest neighbour
     /// (the node containing the closest point of
     /// the target point)    
-    float4 Tree::NearestNeighbourSearch(const float4& targetPoint)
+    Vertex Tree::NearestNeighbourSearch(Vertex& targetPoint)
     {
         // Set initial distance to be max float value and
         // set the target point to be (0, 0, 0, 1)
         float nearestDistance{ std::numeric_limits<float>::max() };
-        float4 nearestPoint{ 0.0f, 0.0f, 0.0f, 1.0f };
+        Vertex nearestPoint{ 0.0f, 0.0f, 0.0f, 1.0f };
 
         NearestNeighbourSearch(targetPoint, root.next,
             0, nearestPoint, nearestDistance);
@@ -523,7 +520,7 @@ namespace kdt
 
     /// Search for point inside tree
     /// If found, return true, else false
-    bool Tree::Find(float4& point)
+    bool Tree::Find(Vertex& point)
     {   
         Node* current{ root.next };
         unsigned int dimension{ 0 };
@@ -537,7 +534,7 @@ namespace kdt
             }
 
             // Continue search
-            if (point.v[dimension] < current->point.v[dimension])
+            if (point[dimension] < current->point[dimension])
             {
                 // Search left subtree
                 current = current->left;
@@ -568,16 +565,16 @@ namespace kdt
 #pragma region Static
 
     /// Sort points by X-value
-    void Tree::SortPointsByXValue(std::vector<float4>& points)
+    void Tree::SortPointsByXValue(std::vector<Vertex>& points)
     {
         std::sort(points.begin(), points.end(), Tree::SortByXCriterion);
     }
 
     /// Criterion for sorting points by X-value
-    bool Tree::SortByXCriterion(const float4 point1,
-        const float4 point2)
+    bool Tree::SortByXCriterion(Vertex& v1,
+                                Vertex& v2)
     {
-        return (point1.v[0] < point2.v[0]);
+        return (v1[0] < v2[0]);
     }
 
 #pragma endregion

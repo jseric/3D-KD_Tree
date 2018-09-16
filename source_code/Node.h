@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Vector4.h"
+#include "Vertex.h"
 
 #include <string>
 
@@ -11,7 +11,7 @@ namespace kdt
     {
 #pragma region Members
 
-        float4 point;
+        Vertex point;
         
         Node* left;
         Node* right;
@@ -21,8 +21,8 @@ namespace kdt
 #pragma region Constructors and destructor
 
         Node(const float, const float, const float, const float);
-        Node(const float4&);
-        Node(const float4&, Node*, Node*);
+        Node(const Vertex&);
+        Node(const Vertex&, Node*, Node*);
 
         ~Node(void);
 

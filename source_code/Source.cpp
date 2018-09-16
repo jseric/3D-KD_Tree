@@ -2,7 +2,7 @@
 #include "Macros.h"
 #include "Timer.h"
 #include "Tree.h"
-#include "Vector4.h"
+#include "Vertex.h"
 
 #include <ctime>
 #include <iostream>
@@ -12,9 +12,9 @@
 void RunTest1(void);
 void RunTest2(void);
 
-kdt::float4 AskUserForCoordinates(void);
+kdt::Vertex AskUserForCoordinates(void);
 
-void GenerateRandomPoints(std::vector<kdt::float4>&,
+void GenerateRandomPoints(std::vector<kdt::Vertex>&,
                           const unsigned int, 
                           const float, const float);
 
@@ -25,10 +25,8 @@ int main(void)
     // Init random seed
     srand(time(NULL));
 
-
-    //RunTest1();
+    RunTest1();
     RunTest2();
-
 
     system("pause");
 
@@ -40,7 +38,8 @@ int main(void)
 void RunTest1(void)
 {
     // Path and name of file containing points
-    std::string filePath{ "points1.txt" };
+    std::string filePath{ 
+        "D:\\Josip\\Development\\Visual Studio 2017\\3D_KD-Tree\\Main\\points1.txt" };
 
     // Create and init Tree and List objects
     kdt::Tree tree{ filePath };
@@ -57,14 +56,14 @@ void RunTest1(void)
     std::cout << list.ToString() << std::endl;
 
     // Get point from user
-    kdt::float4 targetPoint{ AskUserForCoordinates() };
+    kdt::Vertex targetPoint{ AskUserForCoordinates() };
     
     // Create Timer object
     kdt::Timer timer{ false };
 
     // Find the nearest neighbour in tree
     timer.Start();
-    kdt::float4 neighbour{ tree.NearestNeighbourSearch(targetPoint) };
+    kdt::Vertex neighbour{ tree.NearestNeighbourSearch(targetPoint) };
     timer.Stop();
 
     // Print the nearest neighbour from tree
@@ -75,7 +74,7 @@ void RunTest1(void)
 
     // Find the nearest neighbour in list
     timer.Start();
-    neighbour = list.NearestNeighbourSearch(targetPoint);
+    kdt::Vertex neighbour2{ list.NearestNeighbourSearch(targetPoint) };
     timer.Stop();
 
     // Print the nearest neighbour from list
@@ -96,7 +95,7 @@ void RunTest2(void)
     const float minValue{ -1000 };
     const float maxValue{  1000 };
 
-    std::vector<kdt::float4> points{};
+    std::vector<kdt::Vertex> points{};
 
     // Randomly generate points
     GenerateRandomPoints(points, numberOfPoints, minValue, maxValue);
@@ -116,14 +115,14 @@ void RunTest2(void)
     std::cout << list.ToString() << std::endl;
     */
     // Get point from user
-    kdt::float4 targetPoint{ AskUserForCoordinates() };
+    kdt::Vertex targetPoint{ AskUserForCoordinates() };
 
     // Create Timer object
     kdt::Timer timer{ false };
 
     // Find the nearest neighbour in tree
     timer.Start();
-    kdt::float4 neighbour{ tree.NearestNeighbourSearch(targetPoint) };
+    kdt::Vertex neighbour{ tree.NearestNeighbourSearch(targetPoint) };
     timer.Stop();
 
     // Print the nearest neighbour from tree
@@ -134,7 +133,7 @@ void RunTest2(void)
 
     // Find the nearest neighbour in list
     timer.Start();
-    neighbour = list.NearestNeighbourSearch(targetPoint);
+    kdt::Vertex neighbour2{ list.NearestNeighbourSearch(targetPoint) };
     timer.Stop();
 
     // Print the nearest neighbour from list
@@ -145,7 +144,7 @@ void RunTest2(void)
 }
 
 /// Get point coordinates from user
-kdt::float4 AskUserForCoordinates(void)
+kdt::Vertex AskUserForCoordinates(void)
 {
     float x{ 0.0f };
     float y{ 0.0f };
@@ -154,11 +153,11 @@ kdt::float4 AskUserForCoordinates(void)
     std::cout << "Please enter the coordinates:" << std::endl;
     std::cin >> x >> y >> z;
 
-    return kdt::float4{ x,y,z,1.0f };
+    return kdt::Vertex{ x, y, z };
 }
 
 /// Generate number of points randomly
-void GenerateRandomPoints(std::vector<kdt::float4>& points,
+void GenerateRandomPoints(std::vector<kdt::Vertex>& points,
                           const unsigned int counter,
                           const float min, const float max)
 {
@@ -172,7 +171,7 @@ void GenerateRandomPoints(std::vector<kdt::float4>& points,
         y = GetRandomFloat(min, max);
         z = GetRandomFloat(min, max);
 
-        points.push_back(kdt::float4{ x, y, z });
+        points.push_back(kdt::Vertex{ x, y, z });
     }
 }
 
@@ -186,7 +185,3 @@ float GetRandomFloat(const float min, const float max)
 
     return (min + random);
 }
-
-
-
-

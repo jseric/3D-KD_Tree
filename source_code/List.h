@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Vector4.h"
+#include "Vertex.h"
 
 #include <string>
 #include <vector>
@@ -13,7 +13,7 @@ namespace kdt
     private:
 #pragma region Private members
 
-        std::vector<float4> points;
+        std::vector<Vertex> points;
 
 #pragma endregion
 
@@ -27,8 +27,8 @@ namespace kdt
 #pragma region Constructors and destructor
 
         List(void);
-        List(const float4&);
-        List(const std::vector<float4>&);
+        List(const Vertex&);
+        List(const std::vector<Vertex>&);
         List(std::string&);
 
         ~List(void);
@@ -37,14 +37,14 @@ namespace kdt
 
 #pragma region Public list methods
 
-        void Insert(const float4&);
-        void Insert(const std::vector<float4>&);
+        void Insert(const Vertex&);
+        void Insert(const std::vector<Vertex>&);
 
-        int Delete(float4&);
+        int Delete(Vertex&);
 
-        float4 NearestNeighbourSearch(const float4&);
+        Vertex NearestNeighbourSearch(Vertex&);
 
-        bool Find(float4&);
+        bool Find(Vertex&);
 
 #pragma endregion
 

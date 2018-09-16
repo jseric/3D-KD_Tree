@@ -25,7 +25,7 @@ namespace kdt
         while (!file.eof())
         {
             file >> x >> y >> z;
-            Insert(float4{ x, y, z });
+            Insert(Vertex{ x, y, z });
         }
 
         // Close file
@@ -43,7 +43,7 @@ namespace kdt
 
     /// Overloaded constructor 1
     /// Takes 1 point and inserts it in list
-    List::List(const float4& target)
+    List::List(const Vertex& target)
     {
         Insert(target);
     }
@@ -51,7 +51,7 @@ namespace kdt
     /// Overloaded constructor 2
     /// Takes a vector of points and inserts
     /// them inside list
-    List::List(const std::vector<float4>& targets)
+    List::List(const std::vector<Vertex>& targets)
     {
         Insert(targets);
     }
@@ -73,13 +73,13 @@ namespace kdt
     }
 
     /// Insert point to list
-    void List::Insert(const float4& target)
+    void List::Insert(const Vertex& target)
     {
         points.push_back(target);
     }
 
     /// Insert multiple points to list
-    void List::Insert(const std::vector<float4>& targets)
+    void List::Insert(const std::vector<Vertex>& targets)
     {
         for (unsigned int i{ 0 }; i < targets.size(); i++)
             points.push_back(targets[i]);
@@ -87,7 +87,7 @@ namespace kdt
 
     /// Find (and if found) delete the node
     /// with target coordinates
-    int List::Delete(float4& target)
+    int List::Delete(Vertex& target)
     {
         for (unsigned int i{ 0 }; i < points.size(); i++)
         {
@@ -104,12 +104,12 @@ namespace kdt
 
     /// Search the list for the nearest neighbour
     /// (the closest point of the target point)   
-    float4 List::NearestNeighbourSearch(const float4& target)
+    Vertex List::NearestNeighbourSearch(Vertex& target)
     {
         if (points.empty())
-            return float4{};
+            return Vertex{};
 
-        float4 nearestPoint{ points[0] };
+        Vertex nearestPoint{ points[0] };
         float nearestDistance{ Distance(target, nearestPoint) };
 
         for (unsigned int i{ 1 }; i < points.size(); i++)
@@ -127,7 +127,7 @@ namespace kdt
 
     /// Search for point inside list
     /// If found, return true, else false
-    bool List::Find(float4& target)
+    bool List::Find(Vertex& target)
     {
         for (unsigned int i{ 0 }; i < points.size(); i++)
             if (AreEqual(target, points[i]))
@@ -144,14 +144,7 @@ namespace kdt
         std::stringstream ss{};
 
         for (unsigned int i{ 0 }; i < points.size(); i++)
-        {
             ss << points[i].ToString();
-
-            if ((i + 1) % 10)
-                ss << "\t";
-            else
-                ss << std::endl;
-        }
 
         return ss.str();
     }

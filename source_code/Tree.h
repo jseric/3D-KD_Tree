@@ -1,8 +1,8 @@
 #pragma once
 
-#include "Vector4.h"
 #include "Node.h"
 #include "Root.h"
+#include "Vertex.h"
 
 #include <string>
 #include <vector>
@@ -21,11 +21,11 @@ namespace kdt
 
 #pragma region Private helper methods
 
-        Node* CreateNewNode(const float4&);
+        Node* CreateNewNode(const Vertex&);
 
-        void InitTreeWithMultiplePoints(std::vector<float4>);
+        void InitTreeWithMultiplePoints(std::vector<Vertex>);
 
-        unsigned int GetIndexOfMedianNode(std::vector<float4>&);
+        unsigned int GetIndexOfMedianNode(std::vector<Vertex>&);
 
         void ReadFromFile(std::string&);
 
@@ -33,14 +33,14 @@ namespace kdt
 
         void DeleteAll(Node*);
 
-        int Delete(float4&, Node*, unsigned int);
+        int Delete(Vertex&, Node*, unsigned int);
 
-        float4 FindMin(Node*, unsigned int, unsigned int);
+        Vertex FindMin(Node*, unsigned int, unsigned int);
 
-        float4 FindMax(Node*, unsigned int, unsigned int);
+        Vertex FindMax(Node*, unsigned int, unsigned int);
 
-        void NearestNeighbourSearch(const float4&, Node*,
-            unsigned int, float4&, float&);
+        void NearestNeighbourSearch(Vertex&, Node*,
+            unsigned int, Vertex&, float&);
 
         std::string ToString(Node*);
 
@@ -50,8 +50,8 @@ namespace kdt
 #pragma region Constructors and destructor
 
         Tree(void);
-        Tree(const float4&);
-        Tree(const std::vector<float4>&);
+        Tree(const Vertex&);
+        Tree(std::vector<Vertex>);
         Tree(std::string&);
 
         ~Tree(void);
@@ -60,14 +60,14 @@ namespace kdt
 
 #pragma region Public tree methods
 
-        int Insert(float4&);
-        int Insert(std::vector<float4>&);
+        int Insert(Vertex&);
+        int Insert(std::vector<Vertex>&);
 
-        int Delete(float4&);
+        int Delete(Vertex&);
 
-        float4 NearestNeighbourSearch(const float4&);
+        Vertex NearestNeighbourSearch(Vertex&);
 
-        bool Find(float4&);
+        bool Find(Vertex&);
 
 #pragma endregion
 
@@ -79,9 +79,9 @@ namespace kdt
 
 #pragma region Static methods
 
-        static void SortPointsByXValue(std::vector<float4>&);
+        static void SortPointsByXValue(std::vector<Vertex>&);
 
-        static bool SortByXCriterion(const float4, const float4);
+        static bool SortByXCriterion(Vertex&, Vertex&);
 
 #pragma endregion 
 
