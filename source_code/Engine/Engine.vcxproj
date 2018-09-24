@@ -232,11 +232,12 @@
     <ClInclude Include="Pipeline Stages\Shaders\Shader Base.h" />
     <ClInclude Include="Pipeline Stages\Shaders\Vertex Shader.h" />
     <ClInclude Include="Pipeline Stages\State Factory.h" />
-    <ClInclude Include="Repository\KD Tree\Macros\Macros.h" />
+    <ClInclude Include="Repository\KD Tree\Macros\KDTreeMacros.h" />
     <ClInclude Include="Repository\KD Tree\Node\Node.h" />
     <ClInclude Include="Repository\KD Tree\Root\Root.h" />
     <ClInclude Include="Repository\KD Tree\Tree\Tree.h" />
     <ClInclude Include="Repository\KD Tree\Vertex\Vertex.h" />
+    <ClInclude Include="Repository\Repository.h" />
     <ClInclude Include="Scene\Cameras\Camera Base.h" />
     <ClInclude Include="Scene\Cameras\FirstPerson Camera.h" />
     <ClInclude Include="Scene\Input\Input Controller.h" />
@@ -275,6 +276,7 @@
     <ClCompile Include="Repository\KD Tree\Node\Node.cpp" />
     <ClCompile Include="Repository\KD Tree\Tree\Tree.cpp" />
     <ClCompile Include="Repository\KD Tree\Vertex\Vertex.cpp" />
+    <ClCompile Include="Repository\Repository.cpp" />
     <ClCompile Include="Scene\Cameras\FirstPerson Camera.cpp" />
     <ClCompile Include="Scene\Input\Input Controller.cpp" />
     <ClCompile Include="Third Party\DirectX Tool Kit\DDS\DDSTextureLoader.cpp" />

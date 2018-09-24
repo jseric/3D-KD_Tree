@@ -17,6 +17,9 @@
 #include "..\Pipeline Resources\Buffers\Vertex Buffer.h"
 #include "..\pipeline Resources\Buffers\Index Buffer.h"
 
+#include "../Repository/Repository.h"
+#include "../Repository/KD Tree/Tree/Tree.h"
+
 namespace vxe {
 
 	// T is a vertex type
@@ -29,14 +32,32 @@ namespace vxe {
 
 		MeshBase() : _vertexbuffer{ nullptr }, _indexbuffer{ nullptr }, _indexed{ false } { }
 
-        void AddKDTRee(std::vector<T>& vertices)
+        /// Add new KD Tree and add vertices to it
+        void AddNewKDTRee(std::vector<T>& vertices)
         {
             DebugPrint(std::string("\t -- A lambda: Creating new KD Tree... \n"));
 
-            /// TODO
+            std::string targetName{ kdt::CreateNewTree("object", vertices) };
         }
+        
+        /// Find and print the nearest neighbour of the target vertex
+        void CheckForNearestNeighbour(T targetVertex)
+        {
+            DebugPrint(std::string("\t -- A lambda: Searching for nearest neighbour... \n"));
 
+            // Get tree
+            vxe::Tree* tree{ kdt::GetTree() };
 
+            // Search for nearest neighbour
+            T nearestNeighbour{ tree->NearestNeighbourSearch(targetVertex) };
+
+            DebugPrint(std::string("\t -- A lambda: Nearest neighbour of vertex ")
+                .append(vertex.ToString())
+                .append("\n").
+                .append("is vertex ")
+                .append(nearestNeighbour.ToString()));
+
+        }
 
 		concurrency::task<void> CreateAsync(_In_ ID3D11Device2* device,
 			std::vector<T>& vertices,
@@ -58,12 +79,9 @@ namespace vxe {
 
 				//	if (vertices.empty()) throw std::exception("...");
 
-
-                /// jseric01
-                /*
-                    Create tree
-                    NNS
-                */
+                // Add vertices to tree and check for nearest neighbour of the last vertex
+                AddNewKDTRee(vertices);
+                CheckForNearestNeighbour(vertices[vertices.length() - 1]);
 
 				_vertexbuffer = std::make_shared<VertexBuffer<T>>(device, &vertices[0], _vertexcount);
 
@@ -113,6 +131,10 @@ namespace vxe {
 				_indices = reinterpret_cast<U*>(p + 2 * sizeof(unsigned int) + sizeof(T) * _vertexcount);
 
 				_vertexbuffer = std::make_shared<VertexBuffer<T>>(device, _vertices, _vertexcount);
+
+                // Add vertices to tree and check for nearest neighbour of the last vertex
+                AddNewKDTRee(vertices);
+                CheckForNearestNeighbour(vertices[vertices.length() - 1]);
 
 				if (_indexcount != 0) {
 

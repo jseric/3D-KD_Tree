@@ -16,7 +16,7 @@ namespace kdt
     void InsertVertexToTree(std::string, vxe::Vertex);
     void InsertVertexToTree(std::string, std::vector<vxe::Vertex>);
 
-    vxe::Tree* GetTree(std::string);
+    vxe::Tree* GetTree(std::string = "firstTreeAdded");
 
     std::vector<vxe::Tree*> GetAllTrees(void);
 }

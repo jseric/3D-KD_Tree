@@ -143,6 +143,9 @@
     <ClCompile Include="Repository\KD Tree\Node\Node.cpp">
       <Filter>Repository\KD Tree\Node</Filter>
     </ClCompile>
+    <ClCompile Include="Repository\Repository.cpp">
+      <Filter>Repository</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -281,9 +284,6 @@
     <ClInclude Include="Models\Generated Shapes\Grid.h">
       <Filter>Models\Generated Shapes</Filter>
     </ClInclude>
-    <ClInclude Include="Repository\KD Tree\Macros\Macros.h">
-      <Filter>Repository\KD Tree\Macros</Filter>
-    </ClInclude>
     <ClInclude Include="Repository\KD Tree\Vertex\Vertex.h">
       <Filter>Repository\KD Tree\Vertex</Filter>
     </ClInclude>
@@ -295,6 +295,12 @@
     </ClInclude>
     <ClInclude Include="Repository\KD Tree\Node\Node.h">
       <Filter>Repository\KD Tree\Node</Filter>
+    </ClInclude>
+    <ClInclude Include="Repository\KD Tree\Macros\KDTreeMacros.h">
+      <Filter>Repository\KD Tree\Macros</Filter>
+    </ClInclude>
+    <ClInclude Include="Repository\Repository.h">
+      <Filter>Repository</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

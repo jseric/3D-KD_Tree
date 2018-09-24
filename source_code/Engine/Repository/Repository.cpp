@@ -33,7 +33,7 @@ namespace kdt
     }
 
     /// Create new empty tree
-    std::string CreateNewTree(std::string name, )
+    std::string CreateNewTree(std::string name)
     {
         std::string targetName{ CreateUniqueName(name) };
         repo[targetName] = std::shared_ptr<vxe::Tree>(new vxe::Tree());
@@ -94,6 +94,9 @@ namespace kdt
     /// Get the target tree
     vxe::Tree* GetTree(std::string targetName)
     {
+        if (targetName == "firstTreeAdded")
+            return repo[0].get();
+
         auto& query = repo.find(targetName);
 
         return query == repo.end() ? nullptr : query->second.get();
