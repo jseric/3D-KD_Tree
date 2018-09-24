@@ -60,7 +60,7 @@ namespace vxe
     {
         Tree::SortPointsByXValue(points);
 
-        return (points.size() / 2);
+        return ((unsigned int) points.size() / 2);
     }
 
     /// Read points from file
