@@ -21,7 +21,7 @@ namespace vxe
 
 #pragma region Constructors and destructor
 
-        Node(const float, const float, const float, const float);
+        Node(const float = 0.0f, const float = 0.0f, const float = 0.0f, const float = 1.0f);
         Node(const Vertex&);
         Node(const Vertex&, Node*, Node*);
 

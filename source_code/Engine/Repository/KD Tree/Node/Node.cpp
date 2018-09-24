@@ -9,10 +9,10 @@ namespace vxe
 {
     /// Default constructor
     /// Takes up to 4 floating point values
-    Node::Node(const float x = 0.0f,
-               const float y = 0.0f,
-               const float z = 0.0f,
-               const float w = 1.0f)
+    Node::Node(const float x,
+               const float y,
+               const float z,
+               const float w)
         : point{ x, y, z, w },
           left{ nullptr }, right{ nullptr }
     {
