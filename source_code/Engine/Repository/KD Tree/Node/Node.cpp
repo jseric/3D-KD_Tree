@@ -39,6 +39,18 @@ namespace vxe
         delete right;
     }
 
+    /// Run target method on current point and children
+    void Node::IterateNext(std::function<void(Vertex &)> targetMethod)
+    {
+        targetMethod(point);
+
+        if (left)
+            left->IterateNext(targetMethod);
+
+        if (right)
+            right->IterateNext(targetMethod);
+    }
+
     /// Return Node data as a string.
     /// Often used for displaying object information
     /// in console

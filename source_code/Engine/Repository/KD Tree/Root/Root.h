@@ -17,5 +17,13 @@ namespace vxe
             : next{ node }
         {
         }
+
+        /// For each method helper
+        /// Run target method on next member
+        void RunOnNode(std::function<void(Vertex &point)> targetMethod)
+        {
+            if (next)
+                next->IterateNext(targetMethod);
+        }
     };
 }

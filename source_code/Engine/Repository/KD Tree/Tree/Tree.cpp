@@ -555,6 +555,14 @@ namespace vxe
         return RETURN_FIND_POINT_NOT_FOUND;
     }
 
+    /// For each method
+    /// Execute target method on all points in tree
+    void Tree::Foreach(std::function<void(Vertex &)> targetMethod)
+    {
+        root.RunOnNode(targetMethod);
+    }
+
+
     /// Return tree data as a string.
     /// Often used for displaying object information
     /// in console

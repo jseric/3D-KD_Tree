@@ -72,6 +72,13 @@ namespace vxe
 
 #pragma endregion
 
+#pragma region Geometry helper method
+
+        void Foreach(std::function<void(Vertex &)>);
+
+#pragma endregion
+
+
 #pragma region Print methods
 
         std::string ToString(void);
