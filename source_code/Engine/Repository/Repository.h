@@ -10,8 +10,6 @@
 namespace kdt
 {
     std::string CreateNewTree(std::string);
-    std::string CreateNewTree(std::string, DirectX::VertexPosition);
-    std::string CreateNewTree(std::string, std::vector<DirectX::VertexPosition >);
     
     void InsertVertexToTree(std::string, DirectX::VertexPosition);
     void InsertVertexToTree(std::string, std::vector<DirectX::VertexPosition>);

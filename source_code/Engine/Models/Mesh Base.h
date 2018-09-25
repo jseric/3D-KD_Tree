@@ -44,6 +44,10 @@ namespace vxe {
                 DirectX::VertexPosition* vertex = (DirectX::VertexPosition*) &this->_verticesVector[i];
 
                 kdt::InsertVertexToTree(targetName, *vertex);
+
+                DebugPrint(std::string("\t -- A lambda: Pushed vertex ")
+                    .append(vertex->ToString())
+                    .append(" to tree... \n"));
             }
 
             return targetName;

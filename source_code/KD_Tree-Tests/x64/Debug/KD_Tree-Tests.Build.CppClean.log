@@ -1,16 +1,18 @@
+d:\josip\development\visual studio 2017\3d-vanity-kd_tree\kd_tree-tests\x64\debug\xamltypeinfo.impl.g.obj
+d:\josip\development\visual studio 2017\3d-vanity-kd_tree\kd_tree-tests\x64\debug\unittestapp.xaml.obj
 d:\josip\development\visual studio 2017\3d-vanity-kd_tree\kd_tree-tests\x64\debug\kd_tree-tests.pch
 d:\josip\development\visual studio 2017\3d-vanity-kd_tree\kd_tree-tests\x64\debug\vc141.pdb
 d:\josip\development\visual studio 2017\3d-vanity-kd_tree\kd_tree-tests\x64\debug\vc141.idb
 d:\josip\development\visual studio 2017\3d-vanity-kd_tree\kd_tree-tests\x64\debug\pch.obj
-d:\josip\development\visual studio 2017\3d-vanity-kd_tree\kd_tree-tests\x64\debug\unittestapp.xaml.obj
+d:\josip\development\visual studio 2017\3d-vanity-kd_tree\kd_tree-tests\x64\debug\xamllibmetadataprovider.g.obj
 d:\josip\development\visual studio 2017\3d-vanity-kd_tree\kd_tree-tests\x64\debug\unittest.obj
-d:\josip\development\visual studio 2017\3d-vanity-kd_tree\kd_tree-tests\x64\debug\xamltypeinfo.impl.g.obj
 d:\josip\development\visual studio 2017\3d-vanity-kd_tree\kd_tree-tests\x64\debug\xamltypeinfo.g.obj
 d:\josip\development\visual studio 2017\3d-vanity-kd_tree\x64\debug\kd_tree-tests\microsoft.visualstudio.testplatform.testexecutor.winrtcore.winmd
 d:\josip\development\visual studio 2017\3d-vanity-kd_tree\x64\debug\kd_tree-tests\testhost.dll
 d:\josip\development\visual studio 2017\3d-vanity-kd_tree\x64\debug\kd_tree-tests\kd_tree_tests.winmd
 d:\josip\development\visual studio 2017\3d-vanity-kd_tree\x64\debug\kd_tree-tests\kd_tree-tests.lib
 d:\josip\development\visual studio 2017\3d-vanity-kd_tree\x64\debug\kd_tree-tests\kd_tree-tests.exp
+d:\josip\development\visual studio 2017\3d-vanity-kd_tree\kd_tree-tests\x64\debug\kd_tree-tests.vcxprojassemblyreference.cache
 d:\josip\development\visual studio 2017\3d-vanity-kd_tree\kd_tree-tests\generated files\unittestapp.g.h
 d:\josip\development\visual studio 2017\3d-vanity-kd_tree\kd_tree-tests\generated files\xamllibmetadataprovider.g.cpp
 d:\josip\development\visual studio 2017\3d-vanity-kd_tree\kd_tree-tests\generated files\xamltypeinfo.impl.g.cpp
@@ -109,9 +111,10 @@ d:\josip\development\visual studio 2017\3d-vanity-kd_tree\x64\debug\kd_tree-test
 d:\josip\development\visual studio 2017\3d-vanity-kd_tree\x64\debug\kd_tree-tests\core\appxmanifest.xml
 d:\josip\development\visual studio 2017\3d-vanity-kd_tree\x64\debug\kd_tree-tests\core\uwpshim.exe
 d:\josip\development\visual studio 2017\3d-vanity-kd_tree\x64\debug\kd_tree-tests\kd_tree-tests.build.appxrecipe
+d:\josip\development\visual studio 2017\3d-vanity-kd_tree\x64\debug\kd_tree-tests\kd_tree_tests.pri
 d:\josip\development\visual studio 2017\3d-vanity-kd_tree\kd_tree-tests\x64\debug\kd_tree-tests.tlog\kd_tree_tests.winmd.lastbuild
 d:\josip\development\visual studio 2017\3d-vanity-kd_tree\x64\debug\kd_tree-tests\kd_tree-tests.ilk
-d:\josip\development\visual studio 2017\3d-vanity-kd_tree\x64\debug\kd_tree-tests\kd_tree-tests.exe
+d:\josip\development\visual studio 2017\3d-vanity-kd_tree\x64\debug\kd_tree-tests\kd_tree-tests.dll
 d:\josip\development\visual studio 2017\3d-vanity-kd_tree\x64\debug\kd_tree-tests\kd_tree-tests.pdb
 d:\josip\development\visual studio 2017\3d-vanity-kd_tree\kd_tree-tests\x64\debug\kd_tree-tests.tlog\cl.command.1.tlog
 d:\josip\development\visual studio 2017\3d-vanity-kd_tree\kd_tree-tests\x64\debug\kd_tree-tests.tlog\cl.read.1.tlog
@@ -119,6 +122,7 @@ d:\josip\development\visual studio 2017\3d-vanity-kd_tree\kd_tree-tests\x64\debu
 d:\josip\development\visual studio 2017\3d-vanity-kd_tree\kd_tree-tests\x64\debug\kd_tree-tests.tlog\kd_tree-tests.read.1u.tlog
 d:\josip\development\visual studio 2017\3d-vanity-kd_tree\kd_tree-tests\x64\debug\kd_tree-tests.tlog\kd_tree-tests.write.1u.tlog
 d:\josip\development\visual studio 2017\3d-vanity-kd_tree\kd_tree-tests\x64\debug\kd_tree-tests.tlog\link.command.1.tlog
+d:\josip\development\visual studio 2017\3d-vanity-kd_tree\kd_tree-tests\x64\debug\kd_tree-tests.tlog\link.delete.1.tlog
 d:\josip\development\visual studio 2017\3d-vanity-kd_tree\kd_tree-tests\x64\debug\kd_tree-tests.tlog\link.read.1.tlog
 d:\josip\development\visual studio 2017\3d-vanity-kd_tree\kd_tree-tests\x64\debug\kd_tree-tests.tlog\link.write.1.tlog
 d:\josip\development\visual studio 2017\3d-vanity-kd_tree\kd_tree-tests\x64\debug\kd_tree-tests.tlog\xaml.read.1u.tlog

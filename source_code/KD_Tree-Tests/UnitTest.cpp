@@ -195,7 +195,9 @@ namespace KD_Tree_Tests
             Assert::IsNull(GetTree(std::string{ name1 + "23" }));
 
             std::vector<DirectX::VertexPosition> vertices{ DirectX::VertexPosition{ 10 } };
-            std::string name2{ CreateNewTree("tree", vertices) };
+            std::string name2{ CreateNewTree("tree") };
+
+            InsertVertexToTree(name2, vertices);
 
             // Check GetTree()
             Assert::IsNotNull(GetTree(name1));

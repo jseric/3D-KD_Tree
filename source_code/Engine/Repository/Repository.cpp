@@ -39,26 +39,7 @@ namespace kdt
     std::string CreateNewTree(std::string name)
     {
         std::string targetName{ CreateUniqueName(name) };
-        repo[targetName] = std::make_shared<vxe::Tree>(targetName);
-
-        return targetName;
-    }
-
-    /// Create new tree and add 1 vertex
-    std::string CreateNewTree(std::string name, DirectX::VertexPosition vertex)
-    {
-        std::string targetName{ CreateUniqueName(name) };
-        repo[targetName] = std::shared_ptr<vxe::Tree>(new vxe::Tree(vertex));
-
-        return targetName;
-    }
-
-    /// Create new tree and add multiple vertices
-    std::string CreateNewTree(std::string name, 
-        std::vector<DirectX::VertexPosition> vertices)
-    {
-        std::string targetName{ CreateUniqueName(name) };
-        repo[targetName] = std::shared_ptr<vxe::Tree>(new vxe::Tree(vertices));
+        repo[targetName] = std::make_shared<vxe::Tree>();
 
         return targetName;
     }
