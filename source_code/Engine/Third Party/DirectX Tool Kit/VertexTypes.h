@@ -34,6 +34,67 @@ namespace DirectX
 	typedef const XMMATRIX& FXMMATRIX;
 #endif
 
+    // Vertex struct holding position information
+    // Used for KD Trees
+    struct VertexPosition
+    {
+        XMFLOAT3 position;
+
+        VertexPosition(const float x = 0.0f, 
+            const float y = 0.0f,
+            const float z = 0.0f)
+            : position{ XMFLOAT3{ x, y, z} }
+        {
+        }
+
+        VertexPosition(XMFLOAT3 const& position)
+            : position(position)
+        { 
+        }
+
+        VertexPosition(XMFLOAT3&)
+            : position(position)
+        { 
+        }
+
+        VertexPosition(FXMVECTOR position)
+        {
+            XMStoreFloat3(&this->position, position);
+        }
+
+        float& operator[](unsigned int index)
+        {
+            switch (index % 8)
+            {
+            case 0:
+                return position.x;
+            case 1:
+                return position.y;
+            case 2:
+                return position.z;
+
+            default:
+                return position.x;
+            }
+        }
+
+        std::string ToString(void)
+        {
+            std::stringstream ss{};
+
+            ss << "Position: ";
+            ss << "[ " << position.x << " " << position.y;
+            ss << " " << position.z << " ]" << std::endl;
+
+            return ss.str();
+        }
+
+        void operator=(VertexPosition v)
+        {
+            position = v.position;
+        }
+    };
+
 	// Vertex struct holding position and color information.
 	struct VertexPositionColor
 	{

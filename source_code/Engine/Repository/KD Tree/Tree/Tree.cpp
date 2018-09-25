@@ -16,7 +16,7 @@ namespace vxe
 #pragma region Private
 
     /// Allocate new node
-    Node* Tree::CreateNewNode(const Vertex& targetPoint)
+    Node* Tree::CreateNewNode(const DirectX::VertexPosition& targetPoint)
     {
         try
         {
@@ -36,7 +36,7 @@ namespace vxe
     }
 
     /// Initialize tree with multiple nodes
-    void Tree::InitTreeWithMultiplePoints(std::vector<Vertex> points)
+    void Tree::InitTreeWithMultiplePoints(std::vector<DirectX::VertexPosition> points)
     {
         // Get index of median point
         auto firstNodeIndex{ GetIndexOfMedianNode(points) };
@@ -56,7 +56,7 @@ namespace vxe
     }
 
     /// Sort points by X-value and return median node index
-    unsigned int Tree::GetIndexOfMedianNode(std::vector<Vertex>& points)
+    unsigned int Tree::GetIndexOfMedianNode(std::vector<DirectX::VertexPosition>& points)
     {
         Tree::SortPointsByXValue(points);
 
@@ -74,13 +74,13 @@ namespace vxe
         float y{ 0.0f };
         float z{ 0.0f };
 
-        std::vector<Vertex> points;
+        std::vector<DirectX::VertexPosition> points;
 
         // Read points' data from file
         while (!file.eof())
         {
             file >> x >> y >> z;
-            points.push_back(Vertex{ x, y, z });
+            points.push_back(DirectX::VertexPosition{ x, y, z });
         }
 
         // Close file
@@ -111,7 +111,7 @@ namespace vxe
     }
     
     /// Delete node (if it exists) inside subtree with target data
-    int Tree::Delete(Vertex& targetPoint, Node* current,
+    int Tree::Delete(DirectX::VertexPosition& targetPoint, Node* current,
                          unsigned int currentDimension)
     {
         // Get next dimension
@@ -171,8 +171,9 @@ namespace vxe
 
     /// Find point in subtree that contains point with minimum value
     /// in given target dimension
-    Vertex Tree::FindMin(Node* current, unsigned int targetDimension,
-                         unsigned int currentDimension)
+    DirectX::VertexPosition Tree::FindMin(Node* current,
+        unsigned int targetDimension,
+        unsigned int currentDimension)
     {
         if (!current)
         {
@@ -183,7 +184,7 @@ namespace vxe
             // so we are returning a float point with
             // coordinates x = y = z = max_float_value
             float returnBuffer{ std::numeric_limits<float>::max() };
-            return Vertex(returnBuffer, returnBuffer, returnBuffer, 1.0f);
+            return DirectX::VertexPosition(returnBuffer, returnBuffer, returnBuffer);
         }
 
         if (currentDimension == targetDimension)
@@ -206,8 +207,8 @@ namespace vxe
         // right subtree minimum
         IncrementDimension(currentDimension);
 
-        Vertex left{ FindMin(current->left, targetDimension, currentDimension) };
-        Vertex right{ FindMin(current->right, targetDimension, currentDimension) };
+        DirectX::VertexPosition left{ FindMin(current->left, targetDimension, currentDimension) };
+        DirectX::VertexPosition right{ FindMin(current->right, targetDimension, currentDimension) };
 
         if (left[targetDimension] <= right[targetDimension] &&
             left[targetDimension] <= current->point[targetDimension])
@@ -222,7 +223,7 @@ namespace vxe
 
     /// Find point in subtree that contains point with maximum value
     /// in given target dimension
-    Vertex Tree::FindMax(Node* current, unsigned int targetDimension,
+    DirectX::VertexPosition Tree::FindMax(Node* current, unsigned int targetDimension,
                          unsigned int currentDimension)
     {
         if (!current)
@@ -234,7 +235,7 @@ namespace vxe
             // so we are returning a float point with
             // coordinates x = y = z = min_float_value
             float returnBuffer{ std::numeric_limits<float>::min() };
-            return Vertex(returnBuffer, returnBuffer, returnBuffer, 1.0f);
+            return DirectX::VertexPosition(returnBuffer, returnBuffer, returnBuffer);
         }
 
         if (currentDimension == targetDimension)
@@ -257,8 +258,8 @@ namespace vxe
         // right subtree maximum
         IncrementDimension(currentDimension);
 
-        Vertex left{ FindMin(current->left, targetDimension, currentDimension) };
-        Vertex right{ FindMin(current->right, targetDimension, currentDimension) };
+        DirectX::VertexPosition left{ FindMin(current->left, targetDimension, currentDimension) };
+        DirectX::VertexPosition right{ FindMin(current->right, targetDimension, currentDimension) };
 
         if (left[targetDimension] >= right[targetDimension] &&
             left[targetDimension] >= current->point[targetDimension])
@@ -274,9 +275,11 @@ namespace vxe
     /// Search the tree for the nearest neighbour
     /// (the node containing the closest point of
     /// the target point)
-    void Tree::NearestNeighbourSearch(Vertex& targetPoint, Node* current,
-                                      unsigned int dimension, 
-                                      Vertex& nearestPoint, float& nearestDistance)
+    void Tree::NearestNeighbourSearch(DirectX::VertexPosition& targetPoint,
+        Node* current,
+        unsigned int dimension, 
+        DirectX::VertexPosition& nearestPoint, 
+        float& nearestDistance)
     {
         // Get distance between target and current
         float distance{ Distance(targetPoint, current->point) };
@@ -387,7 +390,7 @@ namespace vxe
     /// Overloaded constructor 1
     /// Takes 1 point
     /// Initializes tree with 1 point
-    Tree::Tree(const Vertex& point)
+    Tree::Tree(const DirectX::VertexPosition& point)
         : root{ CreateNewNode(point) }
     {
     }
@@ -395,7 +398,7 @@ namespace vxe
     /// Overloaded constructor 2
     /// Takes a vector of points
     /// Initializes tree with multiple points
-    Tree::Tree(std::vector<Vertex> points)
+    Tree::Tree(std::vector<DirectX::VertexPosition> points)
     {
         InitTreeWithMultiplePoints(points);
     }
@@ -417,7 +420,7 @@ namespace vxe
     }
 
     /// Insert node to tree
-    int Tree::Insert(Vertex& targetPoint)
+    int Tree::Insert(DirectX::VertexPosition& targetPoint)
     {
         // If tree is empty
         if (!root.next)
@@ -483,7 +486,7 @@ namespace vxe
     }
 
     /// Insert multiple nodes to tree
-    int Tree::Insert(std::vector<Vertex>& points)
+    int Tree::Insert(std::vector<DirectX::VertexPosition>& points)
     {
         int returnValue{ 0 };
 
@@ -499,7 +502,7 @@ namespace vxe
 
     /// Find (and if found) delete the node
     /// with target coordinates
-    int Tree::Delete(Vertex& targetPoint)
+    int Tree::Delete(DirectX::VertexPosition& targetPoint)
     {
         int returnValue{ Delete(targetPoint, root.next, 0) };
         return returnValue;
@@ -508,12 +511,12 @@ namespace vxe
     /// Search the tree for the nearest neighbour
     /// (the node containing the closest point of
     /// the target point)    
-    Vertex Tree::NearestNeighbourSearch(Vertex& targetPoint)
+    DirectX::VertexPosition Tree::NearestNeighbourSearch(DirectX::VertexPosition& targetPoint)
     {
         // Set initial distance to be max float value and
         // set the target point to be (0, 0, 0, 1)
         float nearestDistance{ std::numeric_limits<float>::max() };
-        Vertex nearestPoint{ 0.0f, 0.0f, 0.0f, 1.0f };
+        DirectX::VertexPosition nearestPoint{ 0.0f, 0.0f, 0.0f };
 
         NearestNeighbourSearch(targetPoint, root.next,
             0, nearestPoint, nearestDistance);
@@ -523,7 +526,7 @@ namespace vxe
 
     /// Search for point inside tree
     /// If found, return true, else false
-    bool Tree::Find(Vertex& point)
+    bool Tree::Find(DirectX::VertexPosition& point)
     {   
         Node* current{ root.next };
         unsigned int dimension{ 0 };
@@ -557,7 +560,7 @@ namespace vxe
 
     /// For each method
     /// Execute target method on all points in tree
-    void Tree::Foreach(std::function<void(Vertex &)> targetMethod)
+    void Tree::Foreach(std::function<void(DirectX::VertexPosition&)> targetMethod)
     {
         root.RunOnNode(targetMethod);
     }
@@ -576,14 +579,14 @@ namespace vxe
 #pragma region Static
 
     /// Sort points by X-value
-    void Tree::SortPointsByXValue(std::vector<Vertex>& points)
+    void Tree::SortPointsByXValue(std::vector<DirectX::VertexPosition>& points)
     {
         std::sort(points.begin(), points.end(), Tree::SortByXCriterion);
     }
 
     /// Criterion for sorting points by X-value
-    bool Tree::SortByXCriterion(Vertex& v1,
-                                Vertex& v2)
+    bool Tree::SortByXCriterion(DirectX::VertexPosition& v1,
+        DirectX::VertexPosition& v2)
     {
         return (v1[0] < v2[0]);
     }

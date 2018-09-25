@@ -11,23 +11,22 @@ namespace vxe
     /// Takes up to 4 floating point values
     Node::Node(const float x,
                const float y,
-               const float z,
-               const float w)
-        : point{ x, y, z, w },
+               const float z)
+        : point{ x, y, z },
           left{ nullptr }, right{ nullptr }
     {
     }
 
     /// Overloaded constructor 1
     /// Takes a float4 object
-    Node::Node(const Vertex& p)
+    Node::Node(const DirectX::VertexPosition& p)
         : point{ p }, left{ nullptr }, right{ nullptr }
     {
     }
 
     /// Overloaded constructor 2
     /// Takes a float4 object, and 2 Node object pointers
-    Node::Node(const Vertex& p, Node *l, Node *r)
+    Node::Node(const DirectX::VertexPosition& p, Node *l, Node *r)
         : point{ p }, left{ l }, right{ r }
     {
     }
@@ -40,7 +39,7 @@ namespace vxe
     }
 
     /// Run target method on current point and children
-    void Node::IterateNext(std::function<void(Vertex &)> targetMethod)
+    void Node::IterateNext(std::function<void(DirectX::VertexPosition&)> targetMethod)
     {
         targetMethod(point);
 

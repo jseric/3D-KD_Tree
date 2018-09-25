@@ -12,7 +12,7 @@ namespace vxe
     {
 #pragma region Members
 
-        Vertex point;
+        DirectX::VertexPosition point;
         
         Node* left;
         Node* right;
@@ -21,9 +21,9 @@ namespace vxe
 
 #pragma region Constructors and destructor
 
-        Node(const float = 0.0f, const float = 0.0f, const float = 0.0f, const float = 1.0f);
-        Node(const Vertex&);
-        Node(const Vertex&, Node*, Node*);
+        Node(const float = 0.0f, const float = 0.0f, const float = 0.0f);
+        Node(const DirectX::VertexPosition&);
+        Node(const DirectX::VertexPosition&, Node*, Node*);
 
         ~Node(void);
 
@@ -31,7 +31,7 @@ namespace vxe
 
 #pragma region Geometry helper method
 
-        void IterateNext(std::function<void(Vertex &)>);
+        void IterateNext(std::function<void(DirectX::VertexPosition &)>);
 
 #pragma endregion
 

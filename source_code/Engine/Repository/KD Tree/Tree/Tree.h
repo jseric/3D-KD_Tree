@@ -22,11 +22,11 @@ namespace vxe
 
 #pragma region Private helper methods
 
-        Node* CreateNewNode(const Vertex&);
+        Node* CreateNewNode(const DirectX::VertexPosition&);
 
-        void InitTreeWithMultiplePoints(std::vector<Vertex>);
+        void InitTreeWithMultiplePoints(std::vector<DirectX::VertexPosition>);
 
-        unsigned int GetIndexOfMedianNode(std::vector<Vertex>&);
+        unsigned int GetIndexOfMedianNode(std::vector<DirectX::VertexPosition>&);
 
         void ReadFromFile(std::string&);
 
@@ -34,14 +34,14 @@ namespace vxe
 
         void DeleteAll(Node*);
 
-        int Delete(Vertex&, Node*, unsigned int);
+        int Delete(DirectX::VertexPosition&, Node*, unsigned int);
 
-        Vertex FindMin(Node*, unsigned int, unsigned int);
+        DirectX::VertexPosition FindMin(Node*, unsigned int, unsigned int);
 
-        Vertex FindMax(Node*, unsigned int, unsigned int);
+        DirectX::VertexPosition FindMax(Node*, unsigned int, unsigned int);
 
-        void NearestNeighbourSearch(Vertex&, Node*,
-            unsigned int, Vertex&, float&);
+        void NearestNeighbourSearch(DirectX::VertexPosition&, Node*,
+            unsigned int, DirectX::VertexPosition&, float&);
 
         std::string ToString(Node*);
 
@@ -51,8 +51,8 @@ namespace vxe
 #pragma region Constructors and destructor
 
         Tree(void);
-        Tree(const Vertex&);
-        Tree(std::vector<Vertex>);
+        Tree(const DirectX::VertexPosition&);
+        Tree(std::vector<DirectX::VertexPosition>);
         Tree(std::string&);
 
         ~Tree(void);
@@ -61,20 +61,20 @@ namespace vxe
 
 #pragma region Public tree methods
 
-        int Insert(Vertex&);
-        int Insert(std::vector<Vertex>&);
+        int Insert(DirectX::VertexPosition&);
+        int Insert(std::vector<DirectX::VertexPosition>&);
 
-        int Delete(Vertex&);
+        int Delete(DirectX::VertexPosition&);
 
-        Vertex NearestNeighbourSearch(Vertex&);
+        DirectX::VertexPosition NearestNeighbourSearch(DirectX::VertexPosition&);
 
-        bool Find(Vertex&);
+        bool Find(DirectX::VertexPosition&);
 
 #pragma endregion
 
 #pragma region Geometry helper method
 
-        void Foreach(std::function<void(Vertex &)>);
+        void Foreach(std::function<void(DirectX::VertexPosition &)>);
 
 #pragma endregion
 
@@ -87,9 +87,9 @@ namespace vxe
 
 #pragma region Static methods
 
-        static void SortPointsByXValue(std::vector<Vertex>&);
+        static void SortPointsByXValue(std::vector<DirectX::VertexPosition>&);
 
-        static bool SortByXCriterion(Vertex&, Vertex&);
+        static bool SortByXCriterion(DirectX::VertexPosition&, DirectX::VertexPosition&);
 
 #pragma endregion 
 

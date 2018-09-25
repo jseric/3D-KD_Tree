@@ -20,7 +20,7 @@ namespace vxe
 
         /// For each method helper
         /// Run target method on next member
-        void RunOnNode(std::function<void(Vertex &point)> targetMethod)
+        void RunOnNode(std::function<void(DirectX::VertexPosition& point)> targetMethod)
         {
             if (next)
                 next->IterateNext(targetMethod);

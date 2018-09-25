@@ -3,6 +3,7 @@
 #include "Repository.h"
 
 #include "../Utilities.h"
+#include "Utilities.h"
 
 #include <map>
 #include <sstream>
@@ -13,6 +14,7 @@ namespace kdt
     /// Repository global variable, only accessible
     /// inside this file
     static std::map<std::string, std::shared_ptr<vxe::Tree>> repo;
+
 
     /// Private method
     /// Get a unique name for the new tree object
@@ -32,17 +34,18 @@ namespace kdt
         return target.str();
     }
 
+
     /// Create new empty tree
     std::string CreateNewTree(std::string name)
     {
         std::string targetName{ CreateUniqueName(name) };
-        repo[targetName] = std::shared_ptr<vxe::Tree>(new vxe::Tree());
+        repo[targetName] = std::make_shared<vxe::Tree>(targetName);
 
         return targetName;
     }
 
     /// Create new tree and add 1 vertex
-    std::string CreateNewTree(std::string name, vxe::Vertex vertex)
+    std::string CreateNewTree(std::string name, DirectX::VertexPosition vertex)
     {
         std::string targetName{ CreateUniqueName(name) };
         repo[targetName] = std::shared_ptr<vxe::Tree>(new vxe::Tree(vertex));
@@ -51,7 +54,8 @@ namespace kdt
     }
 
     /// Create new tree and add multiple vertices
-    std::string CreateNewTree(std::string name, std::vector<vxe::Vertex> vertices)
+    std::string CreateNewTree(std::string name, 
+        std::vector<DirectX::VertexPosition> vertices)
     {
         std::string targetName{ CreateUniqueName(name) };
         repo[targetName] = std::shared_ptr<vxe::Tree>(new vxe::Tree(vertices));
@@ -60,7 +64,8 @@ namespace kdt
     }
 
     /// Insert a vertex into the target tree
-    void InsertVertexToTree(std::string targetName, vxe::Vertex vertex)
+    void InsertVertexToTree(std::string targetName,
+        DirectX::VertexPosition vertex)
     {
         vxe::Tree* target = kdt::GetTree(targetName);
 
@@ -76,7 +81,8 @@ namespace kdt
     }
 
     /// Insert multiple vertices into the target tree
-    void InsertVertexToTree(std::string targetName, std::vector<vxe::Vertex> vertices)
+    void InsertVertexToTree(std::string targetName,
+        std::vector<DirectX::VertexPosition> vertices)
     {
         vxe::Tree* target = kdt::GetTree(targetName);
 

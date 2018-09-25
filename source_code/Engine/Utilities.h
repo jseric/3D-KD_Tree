@@ -48,7 +48,7 @@ namespace vxe {
 	inline void ThrowIfFailed(HRESULT hr, const wchar_t *file, unsigned long line)
 	{
 		if (FAILED(hr)) {
-
+            /*
 			std::wstringstream wss;
 
 			wss << L"Failed HRESULT 0x" << std::hex << std::uppercase << static_cast<unsigned long>(hr)
@@ -60,6 +60,7 @@ namespace vxe {
 			throw Platform::Exception::CreateException(hr, ref new Platform::String(wss.str().c_str()));
 #endif
 			throw Platform::Exception::CreateException(hr, ref new Platform::String(wss.str().c_str()));
+            */
 		}
 	}
 

@@ -24,9 +24,8 @@ namespace KD_Tree_Tests
         {
             using namespace vxe;
 
-            Vertex* v1 = new Vertex{};
-            Vertex* v2 = new Vertex{ 0, 0, 0, 1,
-                                     0, 0, 0, 0 };
+            DirectX::VertexPosition* v1 = new DirectX::VertexPosition{};
+            DirectX::VertexPosition* v2 = new DirectX::VertexPosition{ 0, 0, 0 };
 
             // Check if default constructor is ok
             Assert::IsTrue(AreEqual(*v1, *v2));
@@ -34,9 +33,9 @@ namespace KD_Tree_Tests
             delete v1;
             delete v2;
 
-            v1 = new Vertex{ DirectX::XMFLOAT4{10, 20, 0, 1}, DirectX::XMFLOAT4{0 , 0, 0, 0} };
-            v2 = new Vertex{ 10, 20, 0, 1, 
-                              0,  0, 0, 0 };
+            v1 = new DirectX::VertexPosition{ 
+                DirectX::XMFLOAT3{10, 20, 0} };
+            v2 = new DirectX::VertexPosition{ 10, 20, 0 };
 
             // Check if different constructors give the same object
             Assert::IsTrue(AreEqual(*v1, *v2));
@@ -44,8 +43,8 @@ namespace KD_Tree_Tests
             delete v1;
             delete v2;
 
-            Vertex v3{ 10, 20 };
-            Vertex v4;
+            DirectX::VertexPosition v3{ 10, 20 };
+            DirectX::VertexPosition v4;
 
             v4 = v3;
 
@@ -75,13 +74,13 @@ namespace KD_Tree_Tests
             Node* n = new Node{};
 
             // Check if default constructor is ok
-            Assert::IsTrue(AreEqual(n->point, Vertex{}));
+            Assert::IsTrue(AreEqual(n->point, DirectX::VertexPosition{}));
             Assert::IsNull(n->left);
             Assert::IsNull(n->right);
 
             delete n;
             
-            Vertex* v = new Vertex{ 10, 20 };
+            DirectX::VertexPosition* v = new DirectX::VertexPosition{ 10, 20 };
             n = new Node{ *v };
 
             // Check if overloaded constructor 1 is ok
@@ -101,7 +100,7 @@ namespace KD_Tree_Tests
         {
             using namespace vxe;
 
-            Vertex* v1 = new Vertex{ 10, 20 };
+            DirectX::VertexPosition* v1 = new DirectX::VertexPosition{ 10, 20 };
             Tree* tree = new Tree{ *v1 };
 
             // Check Tree::Find()
@@ -109,7 +108,7 @@ namespace KD_Tree_Tests
 
             delete tree;
 
-            std::vector<Vertex> vertices{ *v1 };
+            std::vector<DirectX::VertexPosition> vertices{ *v1 };
             tree = new Tree{ vertices };
 
             // Check Tree::Find()
@@ -118,19 +117,19 @@ namespace KD_Tree_Tests
             vertices.clear();
             delete v1;
 
-            v1 = new Vertex{ 20, 10 };
+            v1 = new DirectX::VertexPosition{ 20, 10 };
             vertices.push_back(*v1);
             delete v1;
             
-            v1 = new Vertex{ 10, 20 };
+            v1 = new DirectX::VertexPosition{ 10, 20 };
             vertices.push_back(*v1);
             delete v1;
 
-            v1 = new Vertex{ 20, 20 };
+            v1 = new DirectX::VertexPosition{ 20, 20 };
             vertices.push_back(*v1);
             delete v1;
 
-            v1 = new Vertex{ 10, 10 };
+            v1 = new DirectX::VertexPosition{ 10, 10 };
             vertices.push_back(*v1);
             delete v1;
 
@@ -142,7 +141,7 @@ namespace KD_Tree_Tests
             vertices.clear();
 
             delete v1;
-            v1 = new Vertex{ 30, 20 };
+            v1 = new DirectX::VertexPosition{ 30, 20 };
             tree->Insert(*v1);
 
             // Check Tree::Find() and Tree::Insert()
@@ -154,8 +153,16 @@ namespace KD_Tree_Tests
             delete v1;
             delete tree;
 
-            std::vector<Vertex> v2{ Vertex{30}, Vertex{20}, Vertex{40}, Vertex{10} };
-            std::vector<Vertex> v3{ Vertex{10}, Vertex{20}, Vertex{30}, Vertex{40} };
+            std::vector<DirectX::VertexPosition> v2{ 
+                DirectX::VertexPosition{30},
+                DirectX::VertexPosition{20},
+                DirectX::VertexPosition{40},
+                DirectX::VertexPosition{10} };
+            std::vector<DirectX::VertexPosition> v3{
+                DirectX::VertexPosition{10},
+                DirectX::VertexPosition{20},
+                DirectX::VertexPosition{30},
+                DirectX::VertexPosition{40} };
 
             Tree::SortPointsByXValue(v2);
             
@@ -166,9 +173,9 @@ namespace KD_Tree_Tests
             v2.clear();
             v3.clear();
 
-            Vertex v4{ 50 };
-            Vertex v5{ 100 };
-            Vertex v6{ 25 };
+            DirectX::VertexPosition v4{ 50 };
+            DirectX::VertexPosition v5{ 100 };
+            DirectX::VertexPosition v6{ 25 };
             
             // Check Tree::SortByXCriterion
             Assert::IsTrue(Tree::SortByXCriterion(v4, v5));
@@ -187,7 +194,7 @@ namespace KD_Tree_Tests
             Assert::IsNotNull(GetTree(name1));
             Assert::IsNull(GetTree(std::string{ name1 + "23" }));
 
-            std::vector<vxe::Vertex> vertices{ vxe::Vertex{ 10 } };
+            std::vector<DirectX::VertexPosition> vertices{ DirectX::VertexPosition{ 10 } };
             std::string name2{ CreateNewTree("tree", vertices) };
 
             // Check GetTree()

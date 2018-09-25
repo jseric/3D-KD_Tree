@@ -17,8 +17,8 @@
 #include "..\Pipeline Resources\Buffers\Vertex Buffer.h"
 #include "..\pipeline Resources\Buffers\Index Buffer.h"
 
-#include "../Repository/Repository.h"
-#include "../Repository/KD Tree/Tree/Tree.h"
+#include "..\Repository\Repository.h"
+#include "..\Repository\KD Tree\Tree\Tree.h"
 
 namespace vxe {
 
@@ -33,30 +33,41 @@ namespace vxe {
 		MeshBase() : _vertexbuffer{ nullptr }, _indexbuffer{ nullptr }, _indexed{ false } { }
 
         /// Add new KD Tree and add vertices to it
-        void AddNewKDTRee(std::vector<T>& vertices)
+        std::string AddNewKDTRee(void)
         {
             DebugPrint(std::string("\t -- A lambda: Creating new KD Tree... \n"));
 
-            std::string targetName{ kdt::CreateNewTree("object", vertices) };
+            std::string targetName{ kdt::CreateNewTree("object") };
+
+            for (uint32_t i{ 0 }; i < _vertexcount; i++)
+            {
+                DirectX::VertexPosition* vertex = (DirectX::VertexPosition*) &this->_verticesVector[i];
+
+                kdt::InsertVertexToTree(targetName, *vertex);
+            }
+
+            return targetName;
         }
         
         /// Find and print the nearest neighbour of the target vertex
-        void CheckForNearestNeighbour(T targetVertex)
+        void CheckForNearestNeighbour(std::string targetName,
+            DirectX::VertexPosition targetVertex = { 0.5f, 0.5f, 0.5f })
         {
             DebugPrint(std::string("\t -- A lambda: Searching for nearest neighbour... \n"));
 
             // Get tree
-            vxe::Tree* tree{ kdt::GetTree() };
+            vxe::Tree* tree{ kdt::GetTree("object") };
 
             // Search for nearest neighbour
-            T nearestNeighbour{ tree->NearestNeighbourSearch(targetVertex) };
+            DirectX::VertexPosition nearestNeighbour{ tree->NearestNeighbourSearch(targetVertex) };
 
             DebugPrint(std::string("\t -- A lambda: Nearest neighbour of vertex ")
-                .append(vertex.ToString())
-                .append("\n").
+                .append(targetVertex.ToString())
+                .append("\n")
                 .append("is vertex ")
                 .append(nearestNeighbour.ToString()));
 
+            DebugPrint(std::string("\t -- A lambda: Searching for nearest neighbour ended ... \n"));
         }
 
 		concurrency::task<void> CreateAsync(_In_ ID3D11Device2* device,
@@ -79,11 +90,13 @@ namespace vxe {
 
 				//	if (vertices.empty()) throw std::exception("...");
 
-                // Add vertices to tree and check for nearest neighbour of the last vertex
-                AddNewKDTRee(vertices);
-                CheckForNearestNeighbour(vertices[vertices.length() - 1]);
-
 				_vertexbuffer = std::make_shared<VertexBuffer<T>>(device, &vertices[0], _vertexcount);
+
+                _verticesVector = vertices;
+
+                // Add vertices to tree and check for nearest neighbour of the last vertex
+                std::string treeName{ AddNewKDTRee() };
+                CheckForNearestNeighbour(treeName);
 
 				if (!indices.empty()) {
 					DebugPrint(std::string("\t -- A lambda: Creating an IB ... \n"));
@@ -133,8 +146,8 @@ namespace vxe {
 				_vertexbuffer = std::make_shared<VertexBuffer<T>>(device, _vertices, _vertexcount);
 
                 // Add vertices to tree and check for nearest neighbour of the last vertex
-                AddNewKDTRee(vertices);
-                CheckForNearestNeighbour(vertices[vertices.length() - 1]);
+                //AddNewKDTRee();
+                //CheckForNearestNeighbour();
 
 				if (_indexcount != 0) {
 
@@ -206,6 +219,7 @@ namespace vxe {
 		unsigned _vertexcount;
 		std::shared_ptr<VertexBuffer<T>> _vertexbuffer;
 		T* _vertices;
+        std::vector<T> _verticesVector;
 
 		bool _indexed;
 		unsigned _indexcount;
